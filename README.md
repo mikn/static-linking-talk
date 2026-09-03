@@ -47,14 +47,13 @@ cd 02-musl-target && ../00-tools/firecracker-boot.sh target/x86_64-unknown-linux
 `out/firecracker.txt` in steps 01, 02 and 06 are captures from that path; the
 slides use them.
 
-### What the platform's real stage 1 depends on
+### Why zstd and openssl
 
-`bazel/stateful/rootfs/sandbox-initrd` depends on `libc` and `nlrs` only: pure
-Rust, no `-sys` crate. The talk's init adds one anyway, because that is the
-lesson; `zstd` and `openssl` were picked because both are already in the
-platform's workspace lock (`zstd = "0.13"` directly in drydock and
-uffd-handler, `openssl-sys` transitively via `nydus-utils`), alongside
-`lz4-sys`, `libz-sys`, `userfaultfd-sys`, `devicemapper-sys` and `aws-lc-sys`.
+A real stage-1 init can get by on `libc` plus a pure-Rust netlink crate: no
+`-sys` crate at all. The talk's init adds one anyway, because that is the
+lesson. `zstd` and `openssl` were picked because they are the two shapes of
+`-sys` crate you meet in practice: one that compiles its own C, and one that
+expects a prebuilt library to already exist.
 
 Step 03 uses `00-tools/without-musl-gcc.sh` to hide `musl-gcc` and unset `CC`
 so the failure reproduces on a machine that has `musl-tools` installed.
