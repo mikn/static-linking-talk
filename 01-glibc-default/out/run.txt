@@ -1,0 +1,14 @@
++ cargo build --release
+   Compiling init v0.1.0 (/home/mikn/devel/static-linking-talk/01-glibc-default)
+    Finished `release` profile [optimized] target(s) in 0.21s
++ file target/release/init
+target/release/init: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=8e7c2075f15d3f94879c54fcc8ebb1ee0e8eed5a, not stripped
++ ldd target/release/init
+	linux-vdso.so.1 (0x00007ff41cb8b000)
+	libgcc_s.so.1 => /nix/store/si4q3zks5mn5jhzzyri9hhd3cv789vlm-gcc-15.2.0-lib/lib/libgcc_s.so.1 (0x00007ff41cafe000)
+	libc.so.6 => /nix/store/fjkx1l5cnskzrqacf08z7i8z17256w0j-glibc-2.42-61/lib/libc.so.6 (0x00007ff41c800000)
+	/lib64/ld-linux-x86-64.so.2 => /nix/store/fjkx1l5cnskzrqacf08z7i8z17256w0j-glibc-2.42-61/lib64/ld-linux-x86-64.so.2 (0x00007ff41cb8d000)
++ ../00-tools/boot.sh target/release/init out/boot.txt
+[    0.574906] Run /init as init process
+[    0.575225] Failed to execute /init (error -2)
+[    0.576298] Kernel panic - not syncing: No working init found.  Try passing init= option to kernel. See Linux Documentation/admin-guide/init.rst for guidance.

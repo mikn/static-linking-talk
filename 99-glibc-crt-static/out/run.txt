@@ -1,0 +1,21 @@
++ RUSTFLAGS=-C target-feature=+crt-static cargo build --release
+   Compiling init v0.1.0 (/home/mikn/devel/static-linking-talk/99-glibc-crt-static)
+    Finished `release` profile [optimized] target(s) in 0.48s
++ file target/release/init
+target/release/init: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, for GNU/Linux 3.2.0, BuildID[sha1]=8cd8a1e8e9284a0025bb8b95d5e20cac9a3066b2, not stripped
++ timeout 1 ./target/release/init
+Segmentation fault
++ echo host exit: 139 (124 = still running when timeout hit, i.e. fine)
+host exit: 139 (124 = still running when timeout hit, i.e. fine)
++ ../00-tools/boot.sh target/release/init out/boot-static-pie.txt
+[    0.632048] Run /init as init process
+[    0.632611] init[1]: segfault at 28 ip 00007fb087675a85 sp 00007ffd9c21e6d0 error 4 in init[7fa85,7fb08763a000+d7000] likely on CPU 0 (core 0, socket 0)
+[    0.634339] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
++ RUSTFLAGS=-C target-feature=+crt-static -C relocation-model=static cargo build --release --target-dir target-nopie
+   Compiling init v0.1.0 (/home/mikn/devel/static-linking-talk/99-glibc-crt-static)
+    Finished `release` profile [optimized] target(s) in 0.22s
++ file target-nopie/release/init
+target-nopie/release/init: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, for GNU/Linux 3.2.0, BuildID[sha1]=e6002a73f2220d80c363b5ded92b5237a2215915, not stripped
++ ../00-tools/boot.sh target-nopie/release/init out/boot-nopie.txt
+[    0.636911] Run /init as init process
+[init] hello from pid 1

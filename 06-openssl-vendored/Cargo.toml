@@ -1,0 +1,8 @@
+[package]
+name = "init"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+zstd = "0.13"
+openssl = { version = "0.10", features = ["vendored"] }

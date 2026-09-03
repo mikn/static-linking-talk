@@ -1,0 +1,12 @@
++ rustup target add x86_64-unknown-linux-musl
+info: component rust-std for target x86_64-unknown-linux-musl is up to date
++ cargo build --release
+   Compiling init v0.1.0 (/home/mikn/devel/static-linking-talk/02-musl-target)
+    Finished `release` profile [optimized] target(s) in 0.17s
++ file target/x86_64-unknown-linux-musl/release/init
+target/x86_64-unknown-linux-musl/release/init: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, not stripped
++ ldd target/x86_64-unknown-linux-musl/release/init
+	statically linked
++ ../00-tools/boot.sh target/x86_64-unknown-linux-musl/release/init out/boot.txt
+[    0.576371] Run /init as init process
+[init] hello from pid 1

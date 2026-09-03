@@ -1,0 +1,29 @@
++ zig version
+0.16.0
++ cargo-zigbuild --version
+cargo-zigbuild 0.23.0
++ cargo zigbuild --release
+   Compiling libc v0.2.189
+   Compiling shlex v2.0.1
+   Compiling find-msvc-tools v0.1.11
+   Compiling pkg-config v0.3.34
+   Compiling zstd-safe v7.2.4
+   Compiling jobserver v0.1.35
+   Compiling cc v1.4.4
+   Compiling zstd-sys v2.0.16+zstd.1.5.7
+   Compiling zstd v0.13.3
+   Compiling init v0.1.0 (/home/mikn/devel/static-linking-talk/04-zstd-zigbuild)
+    Finished `release` profile [optimized] target(s) in 3.20s
++ file target/x86_64-unknown-linux-musl/release/init
+target/x86_64-unknown-linux-musl/release/init: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
++ readelf -p .comment target/x86_64-unknown-linux-musl/release/init
+
+String dump of section '.comment':
+  [     0]  rustc version 1.95.0 (59807616e 2026-04-14)
+  [    2d]  Linker: LLD 21.1.8
+  [    40]  clang version 21.1.8
+
++ ../00-tools/boot.sh target/x86_64-unknown-linux-musl/release/init out/boot.txt
+[    0.744505] Run /init as init process
+[init] hello from pid 1
+[init] zstd 1.5.7

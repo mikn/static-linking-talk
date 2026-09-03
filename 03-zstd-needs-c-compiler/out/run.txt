@@ -1,0 +1,27 @@
++ : === A: no musl C compiler, CC unset -> honest failure
++ ../00-tools/without-musl-gcc.sh cargo build --release
++ grep -E ^(warning|error)
++ sort -u
+error: failed to run custom build command for `zstd-sys v2.0.16+zstd.1.5.7`
+warning: zstd-sys@2.0.16+zstd.1.5.7: Compiler family detection failed due to error: ToolNotFound: failed to find tool "x86_64-linux-musl-gcc": No such file or directory (os error 2)
++ : === B: CC exported (Nix devshells do this) -> green, wrong compiler
++ rm -rf target
++ CC=cc cargo build --release
++ tail -1
+    Finished `release` profile [optimized] target(s) in 16.82s
++ file target/x86_64-unknown-linux-musl/release/init
+target/x86_64-unknown-linux-musl/release/init: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, not stripped
++ + cchead --version
+ -1
+gcc (GCC) 15.2.0
++ readelf -p .comment target/x86_64-unknown-linux-musl/release/init
+
+String dump of section '.comment':
+  [     0]  GCC: (GNU) 9.4.0
+  [    11]  rustc version 1.95.0 (59807616e 2026-04-14)
+  [    3d]  GCC: (GNU) 15.2.0
+
++ ../00-tools/boot.sh target/x86_64-unknown-linux-musl/release/init out/boot.txt
+[    5.139825] Run /init as init process
+[init] hello from pid 1
+[init] zstd 1.5.7

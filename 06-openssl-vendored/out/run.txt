@@ -1,0 +1,49 @@
++ command -v perl make
+/usr/bin/perl
++ cargo zigbuild --release
+    Updating crates.io index
+     Locking 24 packages to latest compatible versions
+ Downloading crates ...
+  Downloaded openssl-src v300.6.1+3.6.3
+   Compiling libc v0.2.189
+   Compiling find-msvc-tools v0.1.11
+   Compiling shlex v2.0.1
+   Compiling pkg-config v0.3.34
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.47
+   Compiling vcpkg v0.2.15
+   Compiling zstd-safe v7.2.4
+   Compiling openssl v0.10.81
+   Compiling foreign-types-shared v0.1.1
+   Compiling cfg-if v1.0.4
+   Compiling bitflags v2.13.1
+   Compiling foreign-types v0.3.2
+   Compiling syn v2.0.119
+   Compiling jobserver v0.1.35
+   Compiling cc v1.4.4
+   Compiling openssl-src v300.6.1+3.6.3
+   Compiling zstd-sys v2.0.16+zstd.1.5.7
+   Compiling openssl-sys v0.9.117
+   Compiling openssl-macros v0.1.1
+   Compiling zstd v0.13.3
+   Compiling init v0.1.0 (/home/mikn/devel/static-linking-talk/06-openssl-vendored)
+    Finished `release` profile [optimized] target(s) in 28.06s
++ file target/x86_64-unknown-linux-musl/release/init
+target/x86_64-unknown-linux-musl/release/init: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
++ ldd target/x86_64-unknown-linux-musl/release/init
+$	not a dynamic executable
++ ls -lh target/x86_64-unknown-linux-musl/release/init
+-rwxrwxr-x 2 mikn mikn 4.1M Sep  2 15:54 target/x86_64-unknown-linux-musl/release/init
++ readelf -p .comment target/x86_64-unknown-linux-musl/release/init
+
+String dump of section '.comment':
+  [     0]  rustc version 1.95.0 (59807616e 2026-04-14)
+  [    2d]  Linker: LLD 21.1.8
+  [    40]  clang version 21.1.8
+
++ ../00-tools/boot.sh target/x86_64-unknown-linux-musl/release/init out/boot.txt
+[    0.598894] Run /init as init process
+[init] hello from pid 1
+[init] zstd 1.5.7
+[init] OpenSSL 3.6.3 9 Jun 2026
